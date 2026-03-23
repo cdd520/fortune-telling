@@ -32,6 +32,10 @@ export default function TermDetailDrawer({
   termName,
   contextInfo,
 }: TermDetailDrawerProps) {
+  if (!termName || !open) {
+    return null;
+  }
+
   const termData = getTermByName(termName);
 
   if (!termData) {
@@ -67,7 +71,7 @@ export default function TermDetailDrawer({
   };
   return (
     <Drawer open={open} onOpenChange={onOpenChange}>
-      <DrawerContent className="w-[400px] max-w-[90vw] h-full right-0 left-auto data-[state=open]:slide-in-from-right data-[state=closed]:slide-out-to-right bg-white">
+      <DrawerContent className="w-[400px] max-w-[90vw] h-full right-0 left-auto data-[state=open]:slide-in-from-right data-[state=closed]:slide-out-to-right">
         <DrawerHeader className="border-b border-purple-500/20 bg-gradient-to-b from-purple-500/10 to-transparent">
           <div className="flex items-start gap-4">
             <div className="relative">
