@@ -24,12 +24,6 @@ function ResultContent() {
   
   useEffect(() => {
     const loadResult = async () => {
-      if (currentResult) {
-        setResult(currentResult);
-        setIsLoading(false);
-        return;
-      }
-      
       const date = searchParams.get('date');
       const isLunar = searchParams.get('isLunar') === 'true';
       const time = searchParams.get('time') || '12:00';
