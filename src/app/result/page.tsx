@@ -78,7 +78,7 @@ function ResultContent() {
     };
     
     loadResult();
-  }, [searchParams, currentResult, router, setCurrentResult, saveToHistory]);
+  }, [searchParams]);
   
   if (isLoading) {
     return <LoadingAnimation />;
