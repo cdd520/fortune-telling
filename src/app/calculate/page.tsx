@@ -490,7 +490,7 @@ export default function CalculatePage() {
                     性别
                   </label>
                   <div className="flex gap-4">
-                    {['男', '女'].map((gender) => (
+                    {(['男', '女'] as const).map((gender) => (
                       <label
                         key={gender}
                         className="flex-1 cursor-pointer group"
