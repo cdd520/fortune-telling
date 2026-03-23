@@ -1,0 +1,648 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+    
+    /* 中国传统水墨色调色板 - 高对比度版本 */
+    --xuan-paper: #FDFCF9;
+    --xuan-paper-dark: #F8F6F0;
+    --ink-black: #1A1A1A;
+    --ink-dark: #2D2D2D;
+    --ink-medium: #4A4A4A;
+    --ink-light: #6B6B6B;
+    --ink-lighter: #8A8A8A;
+    
+    /* 水墨晕染色 */
+    --ink-wash-light: rgba(26, 26, 26, 0.04);
+    --ink-wash-medium: rgba(26, 26, 26, 0.1);
+    --ink-wash-dark: rgba(26, 26, 26, 0.2);
+    
+    /* 传统红金色（用于强调）*/
+    --ink-red: #B81C30;
+    --ink-gold: #D4AF37;
+    --ink-jade: #4B8B28;
+    
+    /* 玻璃效果 - 水墨风格 */
+    --glass-bg: rgba(255, 255, 255, 0.85);
+    --glass-border: rgba(26, 26, 26, 0.15);
+    --glass-shadow: 0 8px 32px rgba(26, 26, 26, 0.12);
+    
+    /* 背景渐变 - 宣纸色 */
+    --bg-gradient-start: #FDFCF9;
+    --bg-gradient-mid: #F8F6F0;
+    --bg-gradient-end: #F0EDE4;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    min-height: 100vh;
+    min-height: 100dvh;
+    font-family: var(--font-sans);
+    background-color: transparent;
+    position: relative;
+    color: var(--ink-black);
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=traditional%20Chinese%20ink%20wash%20landscape%20painting%2C%20misty%20mountains%20and%20rivers%2C%20ancient%20style%2C%20black%20and%20white%2C%20serene%20atmosphere%2C%20high%20quality&image_size=landscape_16_9');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    opacity: 0.3;
+    pointer-events: none;
+    z-index: -1;
+  }
+}
+
+@layer components {
+  /* 主按钮 - 水墨风格 */
+  .btn-primary {
+    @apply relative px-8 py-4 font-semibold rounded-2xl overflow-hidden transition-all duration-300;
+    background: linear-gradient(135deg, var(--ink-black) 0%, var(--ink-dark) 100%);
+    box-shadow: 0 4px 20px rgba(26, 26, 26, 0.25);
+    color: #FFFFFF;
+  }
+  
+  .btn-primary::before {
+    content: '';
+    @apply absolute inset-0 opacity-0 transition-opacity duration-300;
+    background: linear-gradient(135deg, var(--ink-medium) 0%, var(--ink-dark) 100%);
+  }
+  
+  .btn-primary:hover::before {
+    @apply opacity-100;
+  }
+  
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(26, 26, 26, 0.35);
+  }
+  
+  .btn-primary:active {
+    transform: translateY(0);
+  }
+  
+  .btn-primary span {
+    @apply relative z-10;
+  }
+
+  /* 次要按钮 */
+  .btn-secondary {
+    @apply px-6 py-3 font-medium rounded-xl transition-all duration-300;
+    background: var(--glass-bg);
+    border: 2px solid var(--glass-border);
+    color: var(--ink-black);
+    backdrop-filter: blur(10px);
+  }
+  
+  .btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.95);
+    border-color: rgba(26, 26, 26, 0.25);
+    transform: translateY(-1px);
+  }
+
+  /* 玻璃卡片 - 水墨风格 */
+  .glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 2px solid var(--glass-border);
+    border-radius: 1.5rem;
+    box-shadow: var(--glass-shadow);
+    @apply overflow-hidden transition-all duration-300;
+  }
+  
+  .glass-card:hover {
+    background: rgba(255, 255, 255, 0.95);
+    border-color: rgba(26, 26, 26, 0.25);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(26, 26, 26, 0.18);
+  }
+
+  /* 水墨风格卡片 */
+  .mystic-card {
+    @apply relative overflow-hidden rounded-2xl p-6;
+    background: linear-gradient(135deg, var(--ink-wash-light) 0%, var(--ink-wash-medium) 100%);
+    border: 2px solid rgba(26, 26, 26, 0.2);
+  }
+  
+  .mystic-card::before {
+    content: '';
+    @apply absolute top-0 left-0 right-0 h-px;
+    background: linear-gradient(90deg, transparent 0%, rgba(212, 175, 55, 0.5) 50%, transparent 100%);
+  }
+
+  /* 输入框 */
+  .input-field {
+    @apply w-full px-5 py-4 rounded-xl outline-none transition-all duration-300;
+    background: rgba(255, 255, 255, 0.9);
+    border: 2px solid rgba(26, 26, 26, 0.2);
+    color: var(--ink-black);
+    backdrop-filter: blur(10px);
+    font-size: 1rem;
+  }
+  
+  .input-field::placeholder {
+    color: rgba(26, 26, 26, 0.4);
+  }
+  
+  .input-field:focus {
+    border-color: var(--ink-gold);
+    box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.2);
+    background: rgba(255, 255, 255, 1);
+  }
+
+  /* 模块标题 */
+  .module-title {
+    @apply text-lg font-semibold flex items-center gap-3;
+    color: var(--ink-black);
+  }
+  
+  .module-title::before {
+    content: '';
+    @apply w-1.5 h-6 rounded-full;
+    background: linear-gradient(180deg, var(--ink-red) 0%, var(--ink-gold) 100%);
+  }
+
+  /* 标签 - 吉凶平 */
+  .tag {
+    @apply inline-flex items-center px-3 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 cursor-pointer;
+    backdrop-filter: blur(10px);
+    border: 2px solid;
+  }
+
+  .tag-lucky {
+    background: rgba(75, 139, 40, 0.12);
+    color: #4B8B28;
+    border-color: rgba(75, 139, 40, 0.3);
+  }
+  
+  .tag-lucky:hover {
+    background: rgba(75, 139, 40, 0.2);
+    transform: translateY(-1px);
+  }
+
+  .tag-unlucky {
+    background: rgba(184, 28, 48, 0.12);
+    color: #B81C30;
+    border-color: rgba(184, 28, 48, 0.3);
+  }
+  
+  .tag-unlucky:hover {
+    background: rgba(184, 28, 48, 0.2);
+    transform: translateY(-1px);
+  }
+
+  .tag-neutral {
+    background: rgba(107, 107, 107, 0.12);
+    color: #4A4A4A;
+    border-color: rgba(107, 107, 107, 0.3);
+  }
+  
+  .tag-neutral:hover {
+    background: rgba(107, 107, 107, 0.2);
+    transform: translateY(-1px);
+  }
+
+  /* 五行标签 */
+  .tag-wuxing-wood {
+    background: rgba(75, 139, 40, 0.1);
+    color: #4B8B28;
+    border-color: rgba(75, 139, 40, 0.25);
+  }
+
+  .tag-wuxing-fire {
+    background: rgba(184, 28, 48, 0.1);
+    color: #B81C30;
+    border-color: rgba(184, 28, 48, 0.25);
+  }
+
+  .tag-wuxing-earth {
+    background: rgba(212, 175, 55, 0.1);
+    color: #B89628;
+    border-color: rgba(212, 175, 55, 0.25);
+  }
+
+  .tag-wuxing-metal {
+    background: rgba(74, 74, 74, 0.1);
+    color: #4A4A4A;
+    border-color: rgba(74, 74, 74, 0.25);
+  }
+
+  .tag-wuxing-water {
+    background: rgba(37, 99, 235, 0.1);
+    color: #1D4ED8;
+    border-color: rgba(37, 99, 235, 0.25);
+  }
+
+  /* 五行文字颜色 */
+  .text-wuxing-wood { color: #4B8B28; }
+  .text-wuxing-fire { color: #B81C30; }
+  .text-wuxing-earth { color: #B89628; }
+  .text-wuxing-metal { color: #4A4A4A; }
+  .text-wuxing-water { color: #1D4ED8; }
+
+  /* 滚动条 */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(26, 26, 26, 0.4) transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: rgba(26, 26, 26, 0.4);
+    border-radius: 4px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background: rgba(26, 26, 26, 0.6);
+  }
+
+  /* 浮动动画 */
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  /* 发光效果 */
+  .glow {
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+  }
+
+  .glow-accent {
+    box-shadow: 0 0 20px rgba(184, 28, 48, 0.5);
+  }
+
+  /* 渐变文字 */
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, var(--ink-red) 0%, var(--ink-gold) 100%);
+  }
+
+  /* 底部导航栏 */
+  .bottom-nav {
+    @apply fixed bottom-0 left-0 right-0 z-50;
+    background: rgba(253, 252, 249, 0.95);
+    backdrop-filter: blur(20px);
+    border-top: 2px solid rgba(26, 26, 26, 0.15);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .bottom-nav-item {
+    @apply flex flex-col items-center justify-center py-2 px-4 transition-all duration-200;
+    color: rgba(26, 26, 26, 0.6);
+  }
+
+  .bottom-nav-item.active {
+    color: var(--ink-gold);
+  }
+
+  .bottom-nav-item:active {
+    transform: scale(0.95);
+  }
+
+  /* 进度条 */
+  .progress-bar {
+    @apply h-2 rounded-full overflow-hidden;
+    background: rgba(26, 26, 26, 0.12);
+  }
+
+  .progress-bar-fill {
+    @apply h-full rounded-full transition-all duration-500;
+    background: linear-gradient(90deg, var(--ink-gold) 0%, var(--ink-red) 100%);
+  }
+
+  /* 八卦图标动画 */
+  @keyframes rotate-slow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .animate-rotate-slow {
+    animation: rotate-slow 20s linear infinite;
+  }
+
+  /* 脉冲发光 */
+  @keyframes pulse-glow {
+    0%, 100% { 
+      box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+    }
+    50% { 
+      box-shadow: 0 0 40px rgba(212, 175, 55, 0.6);
+    }
+  }
+
+  .animate-pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+}
+
+@layer utilities {
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .safe-top {
+    padding-top: env(safe-area-inset-top);
+  }
+
+  /* 玻璃效果工具类 */
+  .glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 2px solid var(--glass-border);
+  }
+
+  /* 文字阴影 */
+  .text-shadow {
+    text-shadow: 0 2px 10px rgba(255, 255, 255, 0.8);
+  }
+
+  .text-shadow-glow {
+    text-shadow: 0 0 20px rgba(212, 175, 55, 0.6);
+  }
+}
+
+/* 移动端适配样式 */
+.device-mobile body {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.device-desktop body {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* 触控友好的最小点击区域 */
+.touch-friendly {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* 移动端容器样式 */
+.device-mobile .max-w-4xl {
+  max-width: 100%;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.device-mobile .max-w-6xl {
+  max-width: 100%;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+/* 移动端字体调整 */
+.device-mobile h1 {
+  font-size: 2.5rem !important;
+}
+
+.device-mobile h2 {
+  font-size: 1.75rem !important;
+}
+
+.device-mobile h3 {
+  font-size: 1.25rem !important;
+}
+
+.device-mobile p {
+  font-size: 1rem !important;
+}
+
+.device-mobile .text-xl {
+  font-size: 1.125rem !important;
+}
+
+.device-mobile .text-2xl {
+  font-size: 1.5rem !important;
+}
+
+.device-mobile .text-3xl {
+  font-size: 1.875rem !important;
+}
+
+.device-mobile .text-5xl {
+  font-size: 2.25rem !important;
+}
+
+.device-mobile .text-7xl {
+  font-size: 3rem !important;
+}
+
+/* 移动端间距调整 */
+.device-mobile .py-12 {
+  padding-top: 2rem !important;
+  padding-bottom: 2rem !important;
+}
+
+.device-mobile .py-20 {
+  padding-top: 3rem !important;
+  padding-bottom: 3rem !important;
+}
+
+.device-mobile .mb-16 {
+  margin-bottom: 2rem !important;
+}
+
+.device-mobile .mb-8 {
+  margin-bottom: 1.5rem !important;
+}
+
+.device-mobile .mb-10 {
+  margin-bottom: 1.5rem !important;
+}
+
+.device-mobile .mb-4 {
+  margin-bottom: 0.75rem !important;
+}
+
+.device-mobile .mb-6 {
+  margin-bottom: 1rem !important;
+}
+
+/* 移动端按钮尺寸 */
+.device-mobile .btn-primary {
+  padding-left: 1.5rem !important;
+  padding-right: 1.5rem !important;
+  padding-top: 0.875rem !important;
+  padding-bottom: 0.875rem !important;
+  font-size: 1rem !important;
+}
+
+.device-mobile .btn-secondary {
+  padding-left: 1rem !important;
+  padding-right: 1rem !important;
+  padding-top: 0.75rem !important;
+  padding-bottom: 0.75rem !important;
+}
+
+/* 移动端输入框 */
+.device-mobile .input-field {
+  padding-left: 1rem !important;
+  padding-right: 1rem !important;
+  padding-top: 0.875rem !important;
+  padding-bottom: 0.875rem !important;
+  font-size: 1rem !important;
+}
+
+/* 移动端卡片 */
+.device-mobile .glass-card {
+  border-radius: 1rem !important;
+  padding: 1.25rem !important;
+}
+
+.device-mobile .p-6 {
+  padding: 1rem !important;
+}
+
+/* 移动端网格布局 */
+.device-mobile .grid-cols-3 {
+  grid-template-columns: 1fr !important;
+}
+
+.device-mobile .gap-6 {
+  gap: 1rem !important;
+}
+
+/* 移动端图标尺寸 */
+.device-mobile .w-32 {
+  width: 5rem !important;
+}
+
+.device-mobile .h-32 {
+  height: 5rem !important;
+}
+
+.device-mobile .w-40 {
+  width: 6rem !important;
+}
+
+.device-mobile .h-40 {
+  height: 6rem !important;
+}
+
+.device-mobile .w-10 {
+  width: 2.5rem !important;
+}
+
+.device-mobile .h-10 {
+  height: 2.5rem !important;
+}
+
+/* 移动端导航 */
+.device-mobile .h-16 {
+  height: 3.5rem !important;
+}
+
+.device-mobile .px-6 {
+  padding-left: 1rem !important;
+  padding-right: 1rem !important;
+}
+
+/* 小屏幕手机适配 (320px - 374px) */
+@media (max-width: 374px) {
+  .device-mobile h1 {
+    font-size: 2rem !important;
+  }
+  
+  .device-mobile h2 {
+    font-size: 1.5rem !important;
+  }
+  
+  .device-mobile .text-5xl {
+    font-size: 1.875rem !important;
+  }
+  
+  .device-mobile .text-7xl {
+    font-size: 2.25rem !important;
+  }
+}
+
+/* 中等屏幕手机适配 (375px - 413px) */
+@media (min-width: 375px) and (max-width: 413px) {
+  .device-mobile h1 {
+    font-size: 2.25rem !important;
+  }
+  
+  .device-mobile .text-5xl {
+    font-size: 2rem !important;
+  }
+  
+  .device-mobile .text-7xl {
+    font-size: 2.5rem !important;
+  }
+}
+
+/* 大屏幕手机适配 (414px - 480px) */
+@media (min-width: 414px) and (max-width: 480px) {
+  .device-mobile h1 {
+    font-size: 2.5rem !important;
+  }
+}
+
+/* 横屏模式适配 */
+@media (orientation: landscape) and (max-width: 768px) {
+  .device-mobile .py-12 {
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+  }
+  
+  .device-mobile .py-20 {
+    padding-top: 1.5rem !important;
+    padding-bottom: 1.5rem !important;
+  }
+  
+  .device-mobile .mb-16 {
+    margin-bottom: 1rem !important;
+  }
+  
+  .device-mobile .w-32 {
+    width: 4rem !important;
+  }
+  
+  .device-mobile .h-32 {
+    height: 4rem !important;
+  }
+}
+
+/* 确保背景在不同屏幕比例下都能正确显示 */
+@media (orientation: portrait) {
+  body {
+    background-size: cover;
+    background-position: center;
+  }
+}
+
+@media (orientation: landscape) {
+  body {
+    background-size: cover;
+    background-position: center;
+  }
+}

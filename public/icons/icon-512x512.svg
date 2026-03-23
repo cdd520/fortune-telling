@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" fill="#1a1a2e"/>
+  <circle cx="256" cy="256" r="200" fill="none" stroke="#ffd700" stroke-width="8"/>
+  <path d="M256 56 A200 200 0 0 1 256 456 A100 100 0 0 1 256 256 A100 100 0 0 0 256 56" fill="#ffd700"/>
+  <circle cx="256" cy="156" r="25" fill="#1a1a2e"/>
+  <circle cx="256" cy="356" r="25" fill="#ffd700"/>
+  <text x="256" y="280" text-anchor="middle" fill="#ffd700" font-size="60" font-family="serif">知命</text>
+</svg>
