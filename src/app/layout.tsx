@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Noto_Sans_SC, Noto_Serif_SC } from "next/font/google";
 import "./globals.css";
 import { AppProvider } from "@/context/AppContext";
+import { Analytics } from "@vercel/analytics/next";
 
 const sansFont = Noto_Sans_SC({
   subsets: ["latin"],
@@ -58,6 +59,7 @@ export default function RootLayout({
         <AppProvider>
           {children}
         </AppProvider>
+        <Analytics />
         <script
           dangerouslySetInnerHTML={{
             __html: `
