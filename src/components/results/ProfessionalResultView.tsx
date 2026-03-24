@@ -30,8 +30,10 @@ export default function ProfessionalResultView({ result }: ProfessionalResultVie
   const { baZi, ziWei, baZhai, birthInfo } = result;
 
   const handleTermClick = (termInfo: TermClickInfo) => {
-    setSelectedTerm(termInfo);
-    setDrawerOpen(true);
+    if (termInfo.name) {
+      setSelectedTerm(termInfo);
+      setDrawerOpen(true);
+    }
   };
 
   const handleExport = async () => {

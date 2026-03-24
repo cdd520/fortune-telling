@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react';
 import { ViewMode, ThemeMode, DeviceMode, CalculationResult, BirthInfo } from '@/types';
 import { loadFromStorage, saveToStorage, removeFromStorage, generateId } from '@/utils/storage';
 
@@ -98,76 +98,80 @@ export function AppProvider({ children }: { children: ReactNode }) {
     }
   }, [themeMode, viewMode, deviceMode]);
 
-  const setViewMode = (mode: ViewMode) => {
+  const setViewMode = useCallback((mode: ViewMode) => {
     setViewModeState(mode);
     saveToStorage(STORAGE_KEYS.VIEW_MODE, mode);
-  };
+  }, []);
 
-  const setThemeMode = (mode: ThemeMode) => {
+  const setThemeMode = useCallback((mode: ThemeMode) => {
     setThemeModeState(mode);
     saveToStorage(STORAGE_KEYS.THEME, mode);
-  };
+  }, []);
 
-  const setDeviceMode = (mode: DeviceMode) => {
+  const setDeviceMode = useCallback((mode: DeviceMode) => {
     setDeviceModeState(mode);
     saveToStorage(STORAGE_KEYS.DEVICE_MODE, mode);
-  };
+  }, []);
 
-  const setCurrentResult = (result: CalculationResult | null) => {
+  const setCurrentResult = useCallback((result: CalculationResult | null) => {
     setCurrentResultState(result);
-  };
+  }, []);
 
-  const saveToHistory = (result: CalculationResult) => {
-    const newHistory = [result, ...history].slice(0, 50);
-    setHistory(newHistory);
-    saveToStorage(STORAGE_KEYS.HISTORY, newHistory);
-  };
+  const saveToHistory = useCallback((result: CalculationResult) => {
+    setHistory(prevHistory => {
+      const newHistory = [result, ...prevHistory].slice(0, 50);
+      saveToStorage(STORAGE_KEYS.HISTORY, newHistory);
+      return newHistory;
+    });
+  }, []);
 
-  const loadFromHistory = (id: string) => {
+  const loadFromHistory = useCallback((id: string) => {
     const result = history.find(item => item.id === id);
     if (result) {
       setCurrentResultState(result);
     }
-  };
+  }, [history]);
 
-  const deleteFromHistory = (id: string) => {
-    const newHistory = history.filter(item => item.id !== id);
-    setHistory(newHistory);
-    saveToStorage(STORAGE_KEYS.HISTORY, newHistory);
-  };
+  const deleteFromHistory = useCallback((id: string) => {
+    setHistory(prevHistory => {
+      const newHistory = prevHistory.filter(item => item.id !== id);
+      saveToStorage(STORAGE_KEYS.HISTORY, newHistory);
+      return newHistory;
+    });
+  }, []);
 
-  const clearHistory = () => {
+  const clearHistory = useCallback(() => {
     setHistory([]);
     removeFromStorage(STORAGE_KEYS.HISTORY);
-  };
+  }, []);
 
-  const setShowPwaPrompt = (show: boolean) => {
+  const setShowPwaPrompt = useCallback((show: boolean) => {
     setShowPwaPromptState(show);
     if (!show) {
       saveToStorage(STORAGE_KEYS.PWA_PROMPT, true);
     }
+  }, []);
+
+  const contextValue = {
+    viewMode,
+    themeMode,
+    deviceMode,
+    currentResult,
+    history,
+    showPwaPrompt,
+    setViewMode,
+    setThemeMode,
+    setDeviceMode,
+    setCurrentResult,
+    saveToHistory,
+    loadFromHistory,
+    deleteFromHistory,
+    clearHistory,
+    setShowPwaPrompt,
   };
 
   return (
-    <AppContext.Provider
-      value={{
-        viewMode,
-        themeMode,
-        deviceMode,
-        currentResult,
-        history,
-        showPwaPrompt,
-        setViewMode,
-        setThemeMode,
-        setDeviceMode,
-        setCurrentResult,
-        saveToHistory,
-        loadFromHistory,
-        deleteFromHistory,
-        clearHistory,
-        setShowPwaPrompt,
-      }}
-    >
+    <AppContext.Provider value={contextValue}>
       {children}
     </AppContext.Provider>
   );

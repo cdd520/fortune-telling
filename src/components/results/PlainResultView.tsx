@@ -27,8 +27,10 @@ export default function PlainResultView({ result }: PlainResultViewProps) {
   const { baZi, baZhai, plainResult, birthInfo } = result;
   
   const handleTermClick = (termInfo: TermClickInfo) => {
-    setSelectedTerm(termInfo);
-    setDrawerOpen(true);
+    if (termInfo.name) {
+      setSelectedTerm(termInfo);
+      setDrawerOpen(true);
+    }
   };
   
   const wuXingData = WU_XING.map(wuxing => ({
